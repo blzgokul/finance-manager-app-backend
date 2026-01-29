@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+
+const auth = require("../middleware/authMiddleware");
 const {
   addIncome,
   getIncomes,
@@ -8,15 +10,15 @@ const {
 } = require("../controllers/incomeController");
 
 // Add income
-router.post("/", addIncome);
+router.post("/", auth, addIncome);
 
-// Get all incomes
-router.get("/", getIncomes);
+// Get incomes (with filters)
+router.get("/", auth, getIncomes);
 
 // Update income
-router.put("/:id", updateIncome);
+router.put("/:id", auth, updateIncome);
 
 // Delete income
-router.delete("/:id", deleteIncome);
+router.delete("/:id", auth, deleteIncome);
 
 module.exports = router;

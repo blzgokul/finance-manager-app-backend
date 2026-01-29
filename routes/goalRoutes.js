@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const {
   createGoal,
   getGoals,
@@ -7,16 +8,23 @@ const {
   deleteGoal,
 } = require("../controllers/goalController");
 
+// ✅ IMPORT AUTH MIDDLEWARE (THIS WAS MISSING)
+const authMiddleware = require("../middleware/authMiddleware");
+
+/* =========================
+   GOAL ROUTES
+========================= */
+
 // Create goal
-router.post("/", createGoal);
+router.post("/", authMiddleware, createGoal);
 
 // Get all goals
-router.get("/", getGoals);
+router.get("/", authMiddleware, getGoals);
 
-// Update goal
-router.put("/:id", updateGoal);
+// Update goal (add money / edit)
+router.put("/:id", authMiddleware, updateGoal);
 
 // Delete goal
-router.delete("/:id", deleteGoal);
+router.delete("/:id", authMiddleware, deleteGoal);
 
 module.exports = router;
